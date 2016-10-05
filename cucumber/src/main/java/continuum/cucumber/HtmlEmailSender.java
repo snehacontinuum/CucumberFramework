@@ -53,6 +53,8 @@ import javax.mail.BodyPart;
 	import continuum.cucumber.Utilities;
 	public class HtmlEmailSender {
 		 
+		static String absolutePath=new File("").getAbsolutePath();
+		
 	    public static void sendEmail(final String userName, final String password, String reciever,
 	            String subject, String message, File report)
 	         {
@@ -116,6 +118,24 @@ import javax.mail.BodyPart;
 	   			e.printStackTrace();
 	   		}
 	   	 }
+	    
+	    
+	    public static void sendReport(){
+			if(Utilities.getMavenProperties("reportMail").equalsIgnoreCase("true"))
+			{
+				String sender=Utilities.getMavenProperties("reportUser");
+				
+				String subject= "Automation Report for " + Utilities.getMavenProperties("ProjectName");
+//				
+			     String message="Automation Report for " + Utilities.getMavenProperties("ProjectName");
+				String password=Utilities.getMavenProperties("reportPassword");
+				File cucumberReport=new File(absolutePath+"\\test-report\\"+"cucumber-results-feature-overview.html");
+				String reciever=Utilities.getMavenProperties("reportReciever");
+
+				sendEmail(sender, password, reciever, subject, message, cucumberReport);
+			
+			}
+		}
 }
 
 			

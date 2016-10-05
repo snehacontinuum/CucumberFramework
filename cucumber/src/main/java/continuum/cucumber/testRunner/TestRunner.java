@@ -11,6 +11,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import continuum.cucumber.DriverFactory;
+import continuum.cucumber.GenerateReport;
+import continuum.cucumber.HtmlEmailSender;
 import continuum.cucumber.Utilities;
 import cucumber.api.testng.TestNGCucumberRunner;
 import cucumber.api.testng.TestNgReporter;
@@ -28,14 +30,13 @@ import cucumber.api.testng.TestNGCucumberRunner;
 @RunWith(Cucumber.class)
 @CucumberOptions(
 monochrome = true,
-features = "src//test//resources//features//DemoSprint",
+features = "src//test//resources//features",
 glue="continuum.cucumber.stepDefinations",
 plugin = {
 "pretty",
 "html:test-report/cucumber",
 "json:test-report/cucumber.json",
-"rerun:target/rerun.txt" },
-tags={"@PSATest"}
+"rerun:target/rerun.txt" }
 )
 public class TestRunner {
 private TestNGCucumberRunner testNGCucumberRunner;
@@ -52,7 +53,7 @@ public void feature(CucumberFeatureWrapper cucumberFeature) {
 	scenarioName=cucumberFeature.getCucumberFeature().getPath();
 	
 	System.out.println("**************Executing scenario *********"+scenarioName);
-//	System.out.println("**************Executing scenario *********"+cucumberFeature.getCucumberFeature().getPath());
+
     testNGCucumberRunner.runCucumber(cucumberFeature.getCucumberFeature());
    
 }
@@ -66,6 +67,8 @@ public Object[][] features() {
 @AfterClass(alwaysRun = true)
 public void tearDownClass() throws Exception {
     testNGCucumberRunner.finish();
+    GenerateReport.generateReport();
+	HtmlEmailSender.sendReport();
 }
 
 public static String getScenarioName(){

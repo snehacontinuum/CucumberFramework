@@ -70,41 +70,9 @@ import cucumber.api.Scenario;
 	    			takeScreenShot(DriverFactory.getDriver(),screenShotName, testMethodName);
             	
 	    	    }
-	       
-	    	        	int resultStatus = result.getStatus();
-	    	        	if(resultStatus==1){
-	    	        		testResultStatus = "Passed";
-	    	        	}
-	    	        	else
-	    	        	{
-	    	        		testResultStatus = "Failed";
-	    	        	Throwable testError = result.getThrowable();
-	    		    		errorMessage = testError.getMessage();
-	    		    		
-	    		    		int errMessageLength = errorMessage.length();
-	    		    		if(errMessageLength>255){
-	    		    			errorMessage = errorMessage.substring(0, 100);
-	    		    		}
-	    		    		else
-	    		    		{
-	    		    			errorMessage = testError.getMessage();
-	    		    		}
-	    		    		
-	    	        	}
-	    	        	
-	    	        	Object[] resultParameter = result.getParameters();
-	    	        	String String_Array[]=new String[resultParameter.length];
-	    	        	
-	    	        	for (int i=0;i<String_Array.length;i++) 
-	    	        		String_Array[i]=resultParameter[i].toString();
-	    	        	 
-
-		            	
+	       	            	
 		            	DriverFactory.getDriver().quit();
 		            	
-		                
-		            	GenerateReport.generateReport();
-						sendReport();
 					    SeleniumServerUtility.killSeleniumServer();
 	        }      
 		              
@@ -161,23 +129,6 @@ import cucumber.api.Scenario;
 	    	        }
 
 		
-				
-				private void sendReport(){
-					if(Utilities.getMavenProperties("reportMail").equalsIgnoreCase("true"))
-					{
-						String sender=Utilities.getMavenProperties("reportUser");
-						
-						String subject= "Automation Report for " + Utilities.getMavenProperties("ProjectName");
-//						String message="<br> <a target =\"_blank\"href=\""+reportPath+"\">"+
-//					    				"<img src=\""+reportPath+"\"alt=\"screenshot Not available\"height=\"800\"width=\"1200\"></a>"; 
-					     String message="Automation Report for " + Utilities.getMavenProperties("ProjectName");
-						String password=Utilities.getMavenProperties("reportPassword");
-						File cucumberReport=new File(absolutePath+"\\test-report\\"+"cucumber-results-feature-overview.html");
-						String reciever=Utilities.getMavenProperties("reportReciever");
-
-							HtmlEmailSender.sendEmail(sender, password, reciever, subject, message, cucumberReport);
-					
-					}
-				}
+			
 	    		
 	}		
