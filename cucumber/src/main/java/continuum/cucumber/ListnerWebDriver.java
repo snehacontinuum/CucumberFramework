@@ -21,68 +21,71 @@ import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
+import org.testng.ITestNGListener;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 
-import continuum.cucumber.testRunner.TestRunner;
+import continuum.cucumber.testRunner.Runner;
 import cucumber.api.Scenario;
 
-	public class ListnerWebDriver implements IInvokedMethodListener{
-		public static String testClassName;
-		public static String testMethodName;
+	public class ListnerWebDriver implements ITestListener{
+		
 		public static String resultParameter[],testResultStatus,timeStamp,imagePath;
 		public static String errorMessage,screenShotPath;
 		static RemoteWebDriver driver=null;
-		static String absolutePath=new File("").getAbsolutePath();
+		
 //		 public static File report = new File(absolutePath+"\\test-report\\");
 		  public static String filePath = new File("").getAbsolutePath()+"\\target\\Screenshots";
 			
 		   
-		    
-	    @Override
-	    public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-	    	SeleniumServerUtility.startServer();
-	    	String browserName= Utilities.getMavenProperties("browser").toUpperCase();
-	    	if (method.isTestMethod()) {
-	        	 driver=WebDriverInitialization.createInstance(driver,browserName);
-	     	 
-	        	   DriverFactory.setWebDriver(driver);
-	     	       	driver.manage().window().maximize();
-	     	 
-	        }
-	    }
-	 
-	    @Override
-	    public void afterInvocation(IInvokedMethod method, ITestResult result) {
-	    if (method.isTestMethod()) {
-	       
-	    	String testMethodName = result.getInstanceName().toString().trim();
-	    //	screenShotPath = imagePath;
-			
-			DateFormat dateFormat = new SimpleDateFormat(
-                    "dd_MMM_yyyy__hh_mm_ssaa");
-			String screenShotName = TestRunner.getScenarioName()+ dateFormat.format(new Date())+".jpg";
-	    	if(result.isSuccess())
-	    		{Reporter.log("*****  " + result.getName() + " test has Passed *****");}
-	    	else 
-	    	{
-	    		
-	    			takeScreenShot(DriverFactory.getDriver(),screenShotName, testMethodName);
-            	
-	    	    }
-	       	            	
-		            	DriverFactory.getDriver().quit();
-		            	
-					    SeleniumServerUtility.killSeleniumServer();
-	        }      
-		              
-	    	       
-	    			
-}
-	    
+			@Override
+			public void onTestStart(ITestResult result) {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void onTestSuccess(ITestResult result) {
+				if(result.isSuccess())
+		    		{Reporter.log("*****  " + result.getName() + " test has Passed *****");}
+				
+			}
+			@Override
+			public void onTestFailure(ITestResult result) {
+				if(!result.isSuccess())
+		    		{
+					         Reporter.log("*****  " + result.getName() + " test has Failed *****");
+					         DateFormat dateFormat = new SimpleDateFormat( "dd_MMM_yyyy__hh_mm_ssaa");
+							String screenShotName = Runner.getScenarioName()+ dateFormat.format(new Date())+".jpg";
+		    		  			takeScreenShot(DriverFactory.getDriver(),screenShotName);
+	            	
+		    	    }
+				
+			}
+			@Override
+			public void onTestSkipped(ITestResult result) {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void onStart(ITestContext context) {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void onFinish(ITestContext context) {
+				// TODO Auto-generated method stub
+				
+			}
+
+
 	    		
 
-				public static void takeScreenShot(WebDriver driver, String screenShotName, String testName) {
+				public static void takeScreenShot(WebDriver driver, String screenShotName) {
 //	    			String jenkins = Utilities.getConfigValues("jenkins");
 //	    			if(jenkins.equalsIgnoreCase("true"))
 //	    			{
@@ -127,8 +130,9 @@ import cucumber.api.Scenario;
 		    				"<img src=\""+imagePath+"\"alt=\"screenshot Not available\"height=\"400\"width=\"400\"></a>");
 	    	       
 	    	        }
-
-		
 			
+		
+				
+				
 	    		
 	}		

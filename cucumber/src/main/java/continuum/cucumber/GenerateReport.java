@@ -14,7 +14,7 @@ public class GenerateReport {
 		try {
 			results.executeFeaturesOverviewReport();
 		} catch (Exception e) {
-			System.out.println("Not able to create cucumber reports");
+			System.out.println("Not able to create cucumber reports"+e.getMessage());
 		}
 		
 	}

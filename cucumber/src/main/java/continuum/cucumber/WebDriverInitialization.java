@@ -79,7 +79,8 @@ public class WebDriverInitialization {
 		  }
 		catch(Exception e){
 			e.printStackTrace();
-			System.out.println("Unable to launch browser instance due to following exception : "+e.getMessage());}
+			System.out.println("Unable to launch browser instance due to following exception : "+e.getMessage());
+			}
 		
 //		((RemoteWebDriver)driver).setFileDetector(new LocalFileDetector());
 	    driver.manage().window().maximize();

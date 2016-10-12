@@ -60,11 +60,11 @@ public class SeleniumServerUtility {
 
 			  } catch (ClientProtocolException e) {
 
-			  System.out.println("Selenium server is not started yet");
+			//  System.out.println("Selenium server is not started yet");
 
 			  } catch (IOException e) {
 
-				  System.out.println("Selenium server is not started yet");
+				//  System.out.println("Selenium server is not started yet");
 			  }
 
 			

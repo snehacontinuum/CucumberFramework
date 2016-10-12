@@ -40,16 +40,13 @@ import org.testng.Reporter;
 
 public class WebdriverWrapper {
 	WebDriver driver=null;
-//	WebDriver driver2=null;
+
 	
 	public WebdriverWrapper(){
 	   driver = DriverFactory.getDriver();
 	}
 	
-//	public WebdriverWrapper(){
-//		   this.driver = driver2; 
-//		}
-		
+
 	
 	public WebDriver getWebdriver(){
 		return driver;
@@ -61,21 +58,20 @@ public class WebdriverWrapper {
 		
 	}
 	
-	public WebDriver openNewWebdriver(WebDriver driver2, String browserName,String url){
-		 Reporter.log("Opening new application with url"+url+" for browser "+browserName);
-		 driver2=WebDriverInitialization.createInstance((RemoteWebDriver) driver2,browserName);
-		 DriverFactory.setWebDriver2(driver2);
-	    
-		 driver2.get(url);
-		 return driver2;
-	  }
+//	public WebDriver openNewWebdriver(WebDriver driver2, String browserName,String url){
+//		 Reporter.log("Opening new application with url"+url+" for browser "+browserName);
+//		 driver2=WebDriverInitialization.createInstance((RemoteWebDriver) driver2,browserName);
+//		 DriverFactory.setWebDriver2(driver2);
+//	    
+//		 driver2.get(url);
+//		 return driver2;
+//	  }
 	
   public void openApplication(String url){
 	  Reporter.log("Opening application with url"+url);
 	  driver.get(url);    
 	  waitFor(3000);
-	  waitForPageLoad();
-  }
+	 }
   
  // public void openOtherApplication(String url ){
 //	  RemoteWebDriver driver2=null;

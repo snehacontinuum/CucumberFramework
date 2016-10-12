@@ -52,9 +52,9 @@ import javax.mail.BodyPart;
 
 	import continuum.cucumber.Utilities;
 	public class HtmlEmailSender {
-		 
-		static String absolutePath=new File("").getAbsolutePath();
 		
+		static String absolutePath=new File("").getAbsolutePath();
+		 
 	    public static void sendEmail(final String userName, final String password, String reciever,
 	            String subject, String message, File report)
 	         {
@@ -66,25 +66,25 @@ import javax.mail.BodyPart;
 	        properties.setProperty("mail.smtp.auth", "true");
 	        
 	        properties.setProperty("mail.smtp.starttls.enable", "true");
-	        properties.setProperty("mail.smtp.EnableSSL.enable","true");
-	        properties.setProperty("mail.smtp.ssl.trust",Utilities.getMavenProperties("emailHost"));
-	    	
-
+	     //   properties.setProperty("mail.smtp.EnableSSL.enable","true");
+	       //oo properties.setProperty("mail.smtp.ssl.trust",Utilities.getMavenProperties("emailHost"));
+	      
+	        Session session = Session.getInstance(properties,
+	        		new javax.mail.Authenticator() {
+	        		protected PasswordAuthentication getPasswordAuthentication() {
+	        		return new PasswordAuthentication(userName, password);
+	        		}
+	        		});
 	       
-	        // creates a new session with an authenticator
-	        Authenticator auth = new Authenticator() {
-	            public PasswordAuthentication getPasswordAuthentication() {
-	                return new PasswordAuthentication(userName, password);
-	            }
-	        };
-	        
-//	        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
-//				protected PasswordAuthentication getPasswordAuthentication() {
-//					return new PasswordAuthentication(userName, password);
-//				}
-//			});
-	 
-	       Session session = Session.getInstance(properties, auth);
+//	        // creates a new session with an authenticator
+//	        Authenticator auth = new Authenticator() {
+//	            public PasswordAuthentication getPasswordAuthentication() {
+//	                return new PasswordAuthentication(userName, password);
+//	            }
+//	        };
+//	        
+//	 
+//	       Session session = Session.getInstance(properties, auth);
 	 
 	        // creates a new e-mail message
 	        Message msg = new MimeMessage(session);
@@ -100,7 +100,7 @@ import javax.mail.BodyPart;
 	 
 	        addReportToMailBody(msg, report);
 	        Transport.send(msg);
-	 
+	   System.out.println("********Sending report mail**********");
 
 			} catch (MessagingException e) {
 				System.out.println("****************Unable to Send Email : " + e.getMessage());
