@@ -40,8 +40,7 @@ plugin = {
 "pretty",
 "html:test-report/cucumber",
 "json:test-report/cucumber.json",
-"rerun:target/rerun.txt" },
-tags={"@Smoke"}
+"rerun:target/rerun.txt" }
 )
 public class Runner {
 private TestNGCucumberRunner testNGCucumberRunner;

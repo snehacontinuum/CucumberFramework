@@ -106,6 +106,8 @@ public class WebdriverWrapper {
 			webEle=driver.findElement(By.name(ele));
 		else if(by.equalsIgnoreCase("link"))
 			webEle=driver.findElement(By.linkText(ele));
+		else if(by.equalsIgnoreCase("partiallink"))
+			webEle=driver.findElement(By.partialLinkText(ele));
 		else if(by.equalsIgnoreCase("xpath"))
 			webEle=driver.findElement(By.xpath(ele));
 		else if(by.equalsIgnoreCase("css"))
